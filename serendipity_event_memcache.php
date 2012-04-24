@@ -72,6 +72,7 @@ class serendipity_event_memcache extends serendipity_event
         'backend_image_addform' => true,
         'frontend_display' => true,
         'backend_preview' => true */
+        'frontend_fetchentry' => true
         ));
 
       $this->markup_elements = array(
@@ -149,6 +150,11 @@ class serendipity_event_memcache extends serendipity_event
      */
     function install() {
         serendipity_plugin_api::hook_event('backend_cache_entries', $this->title);
+        
+        $m = new Memcached();
+        $m->addServer($memcache_host, $memcache_port);
+        print_r($m->getStats());
+        
     }
 
     /*
@@ -166,6 +172,11 @@ class serendipity_event_memcache extends serendipity_event
         global $serendipity;
     
         // kill entries in memcached
+        $m = new Memcached();
+        $m->addServer($memcache_host, $memcache_port);
+        print_r($m->getStats());
+        $m->flush(10);
+        print_r($m->getStats());
         
         // we should rebuild the cache if we change configs
         serendipity_plugin_api::hook_event('backend_cache_purge', $this->title);
@@ -202,9 +213,9 @@ class serendipity_event_memcache extends serendipity_event
         
         if (isset($hooks[$event])) {
           switch($event) {
-            
-            case 'frontend_display':
-            break;
+            case 'frontend_fetchentry':
+                return true;
+                break;
 
             default:
               return false;
