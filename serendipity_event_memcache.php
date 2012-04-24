@@ -38,7 +38,7 @@ class serendipity_event_memcache extends serendipity_event
         $propbag->add('name',         PLUGIN_MEMCACHE_NAME);
         $propbag->add('description',  PLUGIN_MEMCACHE_DESC);
         $propbag->add('stackable',    false);
-        $propbag->add('groups',       array('IMAGES'));
+        $propbag->add('groups',       array('Frontend: External Services'));
         $propbag->add('author',       'E Camden Fisher <fish@fishnix.net>');
         $propbag->add('version',      '0.0.2');
         $propbag->add('requirements', array(
@@ -148,7 +148,6 @@ class serendipity_event_memcache extends serendipity_event
      *
      */
     function install() {
-				$this->setupDB();
         serendipity_plugin_api::hook_event('backend_cache_entries', $this->title);
     }
 
@@ -180,8 +179,7 @@ class serendipity_event_memcache extends serendipity_event
 		 */
 		function purgeCache()
 		{
-				global $serendipity;
-				
+				global $serendipity;	
         // purge the cache
 		}
 		
@@ -194,7 +192,6 @@ class serendipity_event_memcache extends serendipity_event
 		function buildCache()
 		{
 				global $serendipity;
-
         // build the cache
 		}
 
@@ -205,13 +202,6 @@ class serendipity_event_memcache extends serendipity_event
         
         if (isset($hooks[$event])) {
           switch($event) {
-            case 'backend_image_addform':
-            break;
-            
-            case 'backend_image_add':
-            break;
-   
-            case 'backend_preview':
             
             case 'frontend_display':
             break;
