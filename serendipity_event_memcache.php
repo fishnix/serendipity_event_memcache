@@ -23,7 +23,7 @@ if (file_exists($probelang)) {
 
 include_once dirname(__FILE__) . '/lang_en.inc.php';
 
-class serendipity_event_memcache extends serendipity_event_plugin
+class serendipity_event_memcache extends serendipity_event
 {
 
     function example() 
